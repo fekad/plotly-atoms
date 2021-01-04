@@ -14,7 +14,7 @@ default_layout = {
     "dragmode": "orbit",
     "template": "plotly_white",
     "showlegend": False,
-    "hovermode": False,
+    # "hovermode": False,
     "scene": {
         "xaxis": {
             "showgrid": False,

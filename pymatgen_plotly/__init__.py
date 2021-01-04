@@ -24,7 +24,7 @@ class Figure:
 
                 mesh = get_sphere_mesh(
                     site.coords,
-                    site.specie.number / 30 + 0.5,
+                    site.specie.number / 40 + 0.2,
                     colors[site.specie.value],
                 )
                 trace_list.append(mesh)
@@ -52,8 +52,8 @@ class Figure:
 
         self.fig.add_traces(trace_list)
 
-    def add_unitcell(self, structure):
-        a, b, c = structure.lattice.matrix
+    def add_unitcell(self, lattice):
+        a, b, c = lattice.matrix
 
         self.fig.add_traces(
             [
