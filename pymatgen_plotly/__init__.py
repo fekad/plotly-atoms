@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 from .defaults import default_layout
-from .data import colors, atomic_radii
+from .data import atom_radiis, atom_colors, atom_sizes
 from .shapes import get_sphere_mesh, get_line
 
 
@@ -11,49 +11,46 @@ class Figure:
         self.fig = go.Figure()
         self.fig.update_layout(default_layout)
 
-    def add_structure(self, structure, style="ball_and_stick", supercell=None):
-
-        if supercell:
-            structure = structure.copy()
-            structure.make_supercell(supercell)
+    def _add_ball_and_stick(self, coords, species):
 
         trace_list = []
+        for coord, specie in zip(coords, species):
 
-        if style == "ball_and_stick":
-            for site in structure:
-
-                mesh = get_sphere_mesh(
-                    site.coords,
-                    site.specie.number / 40 + 0.2,
-                    colors[site.specie.value],
-                )
-                trace_list.append(mesh)
-
-        elif style == "tubes":
-            for site in structure:
-
-                mesh = get_sphere_mesh(site.coords, 0.3, colors[site.specie.value])
-                trace_list.append(mesh)
-
-        elif style is "spacefilling":
-            for site in structure:
-                # Uses van der waals radii
-                mesh = get_sphere_mesh(
-                    site.coords,
-                    atomic_radii[site.specie.value],
-                    colors[site.specie.value],
-                )
-                trace_list.append(mesh)
-
-        else:
-            raise ValueError(
-                'Only avaliable styles are "ball_and_stick", "tubes" and "spacefilling".'
+            mesh = get_sphere_mesh(
+                coord,
+                atom_sizes[specie],
+                atom_colors[specie],
             )
+            trace_list.append(mesh)
 
         self.fig.add_traces(trace_list)
 
-    def add_unitcell(self, lattice):
-        a, b, c = lattice.matrix
+    def _add_tubes(self, coords, species):
+
+        trace_list = []
+        for coord, specie in zip(coords, species):
+
+            mesh = get_sphere_mesh(coord, 0.3, atom_colors[specie])
+            trace_list.append(mesh)
+
+        self.fig.add_traces(trace_list)
+
+    def _add_spacefilling(self, coords, species):
+
+        trace_list = []
+        for coord, specie in zip(coords, species):
+            # Uses van der waals radii
+            mesh = get_sphere_mesh(
+                coord,
+                atom_radiis[specie],
+                atom_colors[specie],
+            )
+            trace_list.append(mesh)
+
+        self.fig.add_traces(trace_list)
+
+    def _add_unitcell(self, cell):
+        a, b, c = cell
 
         self.fig.add_traces(
             [
@@ -92,6 +89,30 @@ class Figure:
                 get_line(c + a, a + b + c),
             ]
         )
+
+    def add_structure(self, structure, style="ball_and_stick", supercell=None):
+
+        if supercell:
+            structure = structure.copy()
+            structure.make_supercell(supercell)
+
+        coords = structure.cart_coords
+        species = [site.specie.value for site in structure]
+
+        if style == "ball_and_stick":
+            self._add_ball_and_stick(coords, species)
+        elif style == "tubes":
+            self._add_tubes(coords, species)
+        elif style == "spacefilling":
+            self._add_spacefilling(coords, species)
+        else:
+            raise ValueError(
+                'Only avaliable styles are "ball_and_stick", "tubes" and "spacefilling".'
+            )
+
+    def add_unitcell(self, structure):
+        cell = structure.lattice.matrix
+        self._add_unitcell(cell)
 
     def show(self):
         self.fig.show()
