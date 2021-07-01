@@ -1,8 +1,8 @@
 site_name: JSmol viewer widget for Jupyter
 site_description: 'JSmol viewer widget for Jupyter'
 site_author: 'Adam Fekete'
-repo_name: 'fekad/jupyter-jsmol'
-repo_url: 'https://github.com/fekad/jupyter-jsmol'
+repo_name: 'fekad/plotly-atoms'
+repo_url: 'https://github.com/fekad/plotly-atoms'
 
 docs_dir: docs/
 
@@ -10,7 +10,7 @@ nav:
   - Home: index.md
   - Development:
       - Installation: installation-dev.md
-      - Issues on GitHub: https://github.com/fekad/jupyter-jsmol/issues
+      - Issues on GitHub: https://github.com/fekad/plotly-atoms/issues
 
 
 theme:

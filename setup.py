@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup_args = dict(
-    name='pymatgen_plotly',
+    name='plotly_atoms',
     description='Structure visualisation for pymatgen object',
     long_description=long_description,
     long_description_content_type="text/markdown",
     version='0.1.0',
     author='Adam Fekete',
     author_email='adam@fekete.co.uk',
-    url='https://github.com/fekad/pymatgen-plotly',
+    url='https://github.com/fekad/plotly-atoms',
     license='BSD',
     platforms="Linux, Mac OS X, Windows",
     keywords=['Jupyter', 'Widgets', 'IPython'],

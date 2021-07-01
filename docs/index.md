@@ -1,15 +1,15 @@
-# Welcome to pymatgen_plotly viewer widget
+# Welcome to plotly_atoms viewer widget
 
 Structure visualisation for pymatgen object
 
 ## Quickstart
 
-To get started with pymatgen_plotly, install with pip:
+To get started with plotly_atoms, install with pip:
 
-    pip install pymatgen_plotly
+    pip install plotly_atoms
 
 
 ## Basic usage
 
-    import pymatgen_plotly
+    import plotly_atoms
 
