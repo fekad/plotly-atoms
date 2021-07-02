@@ -1,5 +1,5 @@
-from pymatgen import Lattice, Structure
-from plotly_atoms import Figure
+from pymatgen.core import Lattice, Structure
+from plotly_atoms.interfaces.pymatgen import Figure
 
 
 coords = [[0, 0, 0], [0.75, 0.5, 0.75]]
